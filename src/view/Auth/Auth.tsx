@@ -3,7 +3,7 @@ import "./Auth.less";
 import Stroke3 from "./../../assets/Stroke3.png";
 import Group from "./../../assets/Group.png";
 
-import { Tabs } from 'antd';
+import { Tabs, ConfigProvider } from 'antd';
 import type { TabsProps } from 'antd';
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
@@ -12,14 +12,14 @@ import Registration from "./Registration/Registration";
 const Auth: React.FC = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth);
-    }
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
     const list = ["Автоматизация HR", "Интеграция с job-порталами", "Оценка персонала", "Синхронизация с Outlook",
         "Безопасность данных", "Парсинг резюме", "Мультиязычность", "Конструктор отчетности"];
 
@@ -51,12 +51,21 @@ const Auth: React.FC = () => {
                         </div>)}
                     </div>
                 </div>
-                {windowWidth>1290 && <img src={Group} className="group" alt="Group" />}
+                {windowWidth > 1290 && <img src={Group} className="group" alt="Group" />}
             </div>
             <div className="tabsWrapper">
                 <div className="tabs">
-                    <Tabs defaultActiveKey="1" items={tabsItems} onChange={onChange}
-                        tabBarStyle={{ width: "336px", margin: 0 }} />
+                    {/* <ConfigProvider
+                        theme={{
+                            token: {
+                                colorPrimary: '#3943ed',
+                            },
+                        }}
+                    > */}
+                        <Tabs defaultActiveKey="2" items={tabsItems} onChange={onChange}
+                            // tabBarStyle={{ width: "336px", margin: 0 }}
+                             />
+                    {/* </ConfigProvider> */}
                 </div>
             </div>
         </div>
