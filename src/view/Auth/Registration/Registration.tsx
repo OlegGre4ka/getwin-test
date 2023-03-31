@@ -21,8 +21,10 @@ const Registration: React.FC = () => {
             </div>
 
             <div className="inputPass">
-                <InputPassword label="Придумайте пароль" placeholder="Укажите ваш пароль" 
-                changePassHandler={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)} />
+                <InputPassword label="Придумайте пароль" placeholder="Укажите ваш пароль" isKey={true}
+                value={password}
+                changePassHandler={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)} 
+                setGeneratePassHandler={setPassword} />
             </div>
 
             <div className="inputConfirmPass">
