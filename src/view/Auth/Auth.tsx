@@ -46,7 +46,7 @@ const Auth: React.FC = () => {
                     <h1>Войти в аккаунт</h1>
                     <p className="description">Введите ваш E-mail и пароль, чтобы начать<br /> использовать все преимущества платформы:</p>
                     <div className="listContainer">
-                        {list.map(el => <div className="listElement">
+                        {list.map((el,i) => <div className="listElement" key={i}>
                             <span className="square"><img src={Stroke3} alt="" /></span><span className="textElement">{el}</span>
                         </div>)}
                     </div>

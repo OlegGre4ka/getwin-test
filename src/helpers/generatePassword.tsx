@@ -1,21 +1,16 @@
 export function generatePassword() {
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const numbers = "0123456789";
-    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const allowedChars = alphabet + uppercase + numbers;
-  
-    const minLength = 8;
-    const maxLength = 14;
-  
-    let passwordLength = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
-    let password = "";
-  
-    password += uppercase.charAt(Math.floor(Math.random() * uppercase.length));
-    password += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-  
-    for (let i = 2; i < passwordLength; i++) {
-      password += allowedChars.charAt(Math.floor(Math.random() * allowedChars.length));
-    }
-  
-    return password;
+  const length = Math.floor(Math.random() * 7) + 8; // Генеруємо довжину пароля в діапазоні від 8 до 14 символів
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // Встановлюємо набір символів, що можуть бути в паролі
+  let password = "";
+  for (let i = 0, n = charset.length; i < length; ++i) {
+    const index = Math.floor(Math.random() * n); // Генеруємо індекс символу
+    password += charset.charAt(index); // Додаємо символ до пароля
   }
+  // Переконуємося, що пароль містить хоча б одну цифру
+  if (!/\d/.test(password)) {
+    const randomIndex = Math.floor(Math.random() * length); // Генеруємо випадковий індекс
+    const randomDigit = Math.floor(Math.random() * 10); // Генеруємо випадкову цифру
+    password = password.slice(0, randomIndex) + randomDigit + password.slice(randomIndex + 1); // Замінюємо символ на випадкову цифру
+  }
+  return password;
+}

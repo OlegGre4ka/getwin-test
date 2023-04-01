@@ -1,9 +1,9 @@
 import React from "react";
 import "./Button.less";
 
-type ButtonProps = {
-    type?: string;
-    clickHandler: () => void;
+interface ButtonProps{
+    type?: 'button'| 'submit' | 'reset';
+    clickHandler?: () => void;
     children: string;
     disabled?: boolean;
 };
@@ -15,7 +15,7 @@ backgroundColor: ''
     return (
         <button 
         className="button"
-        type={'button' || type} 
+        type={type || 'button'} 
         onClick={clickHandler} 
         disabled={disabled}
         style={btnStyles}

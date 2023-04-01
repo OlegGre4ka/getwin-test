@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import "./InputPassword.less";
 // import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Input } from 'antd';
+import { Noop, RefCallBack } from "react-hook-form";
 import Key from "./../../assets/Key.png";
 import KeyActive from "./../../assets/KeyActive.png";
 import Copy from "./../../assets/Copy.png";
@@ -13,30 +14,44 @@ export interface InputPasswordProps {
     value?: string;
     placeholder: string;
     label: string;
-    changePassHandler: (e: React.FormEvent<HTMLInputElement>) => void;
     isKey?: boolean;
-    // setGeneratePassHandler?: (e: MouseEventHandler<HTMLDivElement>) => string;
     setGeneratePassHandler?: any;
+    onBlur: Noop;
+    onChange: (...event: any[])=>void;
+    ref: RefCallBack;
 
 }
 
-export function InputPassword({ value, placeholder, label, changePassHandler, isKey, setGeneratePassHandler }: InputPasswordProps) {
+const InputPassword = memo(({ /*register, name,changePassHandler,*/ placeholder, label, isKey, setGeneratePassHandler,
+onBlur, onChange, value, ref
+}: InputPasswordProps) => {
     const [isGeneratePass, setIsGeneratePass] = useState(false);
     const [generatedPass, setGeneratedPass] = useState("");
 
     useEffect(
         () => {
             setGeneratedPass(generatePassword());
-        }, []
+        }, [isKey]
     )
+
+    const copyTextToClipboard = (text: string) => {
+        navigator.clipboard.writeText(text).then(() => {
+            console.log('Text copied to clipboard');
+        }, (err) => {
+            console.error('Could not copy text: ', err);
+        });
+    }
     console.log(generatedPass, "generatedPass")
     return (
         <>
             <label>{label}</label>
             <Input.Password
-                value={value}
+                // name={name}
+                // {...register(name)}
+                onBlur={onBlur} onChange={onChange} value={value} ref={ref}
+
                 placeholder={placeholder}
-                onChange={changePassHandler}
+                // onChange={changePassHandler}
             // iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined 
             // />)}
             />
@@ -51,15 +66,17 @@ export function InputPassword({ value, placeholder, label, changePassHandler, is
                 <div className="option">
                     <span>{generatedPass}</span>
                     <div>
-                    <img className="copy" src={Copy} alt="Copy" />
-                    <img className="reGenerate" src={ReGenerate} alt="ReGenerate" />
+                        <img className="copy" src={Copy} alt="Copy"
+                            onClick={() => copyTextToClipboard(generatedPass)} />
+                        <img className="reGenerate" src={ReGenerate} alt="ReGenerate"
+                            onClick={() => setGeneratedPass(generatePassword())} />
                     </div>
                 </div>
-                <div className="option" 
-                onClick={e => {
-                    setGeneratePassHandler(generatedPass);
-                    setIsGeneratePass(false);
-                }}>
+                <div className="option"
+                    onClick={e => {
+                        setGeneratePassHandler(generatedPass);
+                        setIsGeneratePass(false);
+                    }}>
                     <span>Применить сгенерированный пароль</span>
                 </div>
             </div>}
@@ -67,5 +84,7 @@ export function InputPassword({ value, placeholder, label, changePassHandler, is
 
 
     );
-}
+})
+
+export default InputPassword
 

@@ -1,16 +1,38 @@
-import { Input as InputAntd } from "antd"
-
+import { Input as InputAntd } from "antd";
+import { Noop, RefCallBack } from "react-hook-form";
 export interface InputProps {
     label: string;
-    changeEmailHandler:(e: React.FormEvent<HTMLInputElement> )=>void;
+    placeholder: string;
+    changeEmailHandler?: (e: React.FormEvent<HTMLInputElement>) => void;
+    // register: any;
+    // name: string;
+    onBlur: Noop;
+    onChange: (...event: any[])=>void;
+    value: string;
+    ref: RefCallBack;
+
 }
 
-export function Input({ label, changeEmailHandler }: InputProps) {
+const Input = ({ label, placeholder, /*name,  changeEmailHandler, register,*/
+    onBlur, onChange, value, ref
+}: InputProps) => {
+    // console.log(register, "register")
     return (
         <div>
             <label>{label}</label>
-            <InputAntd onChange={changeEmailHandler}/>
+            {/* <input type="text" placeholder="Email" {...register(name)}   /> */}
+            <InputAntd
+            onBlur={onBlur} onChange={onChange} value={value} ref={ref}
+                // {...register(name)}
+                // {...register}
+                // onChange={register.onChange}
+                // ref={register.ref}
+                // name={name}
+                placeholder={placeholder}
+            // onChange={changeEmailHandler}
+            />
         </div>
     );
 }
+export default Input
 
