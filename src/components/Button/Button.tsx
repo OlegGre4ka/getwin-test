@@ -6,19 +6,17 @@ interface ButtonProps{
     clickHandler?: () => void;
     children: string;
     disabled?: boolean;
+    btnStyle?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ type, clickHandler, children, disabled = false }) => {
-    const btnStyles = {
-backgroundColor: ''
-    }
+const Button: React.FC<ButtonProps> = ({ type, clickHandler, children, disabled = false,btnStyle }) => {
+
     return (
         <button 
-        className="button"
+        className={btnStyle? btnStyle : "button"}
         type={type || 'button'} 
         onClick={clickHandler} 
         disabled={disabled}
-        style={btnStyles}
         >
             {children}
         </button>
