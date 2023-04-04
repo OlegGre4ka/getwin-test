@@ -5,8 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as API from "./../../../API/index";
 import Input from "./../../../components/Input/Input";
-import  InputPassword from "./../../../components/InputPassword/InputPassword";
+import InputPassword from "./../../../components/InputPassword/InputPassword";
 import Button from "./../../../components/Button/Button";
+import useModal from "./../../../hooks/useModal";
+import Modal from "./../../../components/Modal/Modal";
 
 type FormValues = {
     email: string;
@@ -14,7 +16,12 @@ type FormValues = {
     confirmPassword: string;
 };
 
-const Registration: React.FC = () => {
+interface IRegistration {
+    openModal: any;
+}
+
+const Registration = ({openModal}:IRegistration) => {
+    // const [isModalOpen, openModal, closeModal] = useModal();
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
     // const [confirmPassword, setConfirmPassword] = useState('');
@@ -37,69 +44,74 @@ const Registration: React.FC = () => {
         resolver: yupResolver(validationSchema)
     });
 
-    const registerFormSubmit: SubmitHandler<FormValues> = async(data) => {
-       const response = await API.postRegister(data);
-       console.log(data, response, "data-submit");
+    const registerFormSubmit: SubmitHandler<FormValues> = async (data) => {
+        // const response = await API.postRegister(data);
+        // console.log(data, response, "data-submit");
+        openModal();
     };
 
     return (
-        <form onSubmit={handleSubmit(registerFormSubmit)}>
-            <div className="inputEmail">
-                <Controller
-                    name="email"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <Input label="E-mail" placeholder="Email" onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
-                    )}
-                />
+        <>
+            <form onSubmit={handleSubmit(registerFormSubmit)}>
+                <div className="inputEmail">
+                    <Controller
+                        name="email"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange, onBlur, value, ref } }) => (
+                            <Input label="E-mail" placeholder="Email" onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
+                        )}
+                    />
 
-                {errors.email && <span className="error">{errors.email.message}</span>}
-            </div>
+                    {errors.email && <span className="error">{errors.email.message}</span>}
+                </div>
 
-            <div className="inputPass">
-                <Controller
-                    name="password"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <InputPassword
-                            label="Придумайте пароль"
-                            placeholder="Укажите ваш пароль"
-                            isKey={true}
-                            setGeneratePassHandler={(val: string) => setValue("password", val)}
-                            onBlur={onBlur} onChange={onChange} value={value} ref={ref}
-                        />
-                    )}
-                />
+                <div className="inputPass">
+                    <Controller
+                        name="password"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange, onBlur, value, ref } }) => (
+                            <InputPassword
+                                label="Придумайте пароль"
+                                placeholder="Укажите ваш пароль"
+                                isKey={true}
+                                setGeneratePassHandler={(val: string) => setValue("password", val)}
+                                onBlur={onBlur} onChange={onChange} value={value} ref={ref}
+                            />
+                        )}
+                    />
 
-                {errors.password && <span className="error">{errors.password.message}</span>}
-            </div>
+                    {errors.password && <span className="error">{errors.password.message}</span>}
+                </div>
 
-            <div className="inputConfirmPass">
-                <Controller
-                    name="confirmPassword"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <InputPassword
-                            label="Повторите пароль"
-                            placeholder="Повторите ваш пароль"
-                            value={value}
-                            onBlur={onBlur}
-                            onChange={onChange}
-                            ref={ref}
-                        />
-                    )}
-                />
-                {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
-            </div>
+                <div className="inputConfirmPass">
+                    <Controller
+                        name="confirmPassword"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange, onBlur, value, ref } }) => (
+                            <InputPassword
+                                label="Повторите пароль"
+                                placeholder="Повторите ваш пароль"
+                                value={value}
+                                onBlur={onBlur}
+                                onChange={onChange}
+                                ref={ref}
+                            />
+                        )}
+                    />
+                    {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
+                </div>
 
-            <Button type="submit"
-            >Зарегиситрироваться</Button>
+                <Button type="submit"
+                >Зарегиситрироваться</Button>
 
-        </form>
-
+            </form>
+            {/* {!isModalOpen && <Modal
+                show={isModalOpen}
+                onHide={closeModal} />} */}
+        </>
     )
 }
 export default Registration

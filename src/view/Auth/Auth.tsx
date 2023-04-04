@@ -7,11 +7,12 @@ import { Tabs, ConfigProvider } from 'antd';
 import type { TabsProps } from 'antd';
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
-
-
+import Modal from "./../../components/Modal/Modal";
+import useModal from "./../../hooks/useModal";
 const Auth: React.FC = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+    const [isModalOpen, openModal, closeModal] = useModal();
+console.log(isModalOpen, "openModal")
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
@@ -32,7 +33,7 @@ const Auth: React.FC = () => {
         {
             key: '2',
             label: `Регистрация`,
-            children: <Registration />,
+            children: <Registration openModal={openModal}/>,
         },
     ];
 
@@ -68,6 +69,8 @@ const Auth: React.FC = () => {
                     {/* </ConfigProvider> */}
                 </div>
             </div>
+               {isModalOpen && <Modal
+                onHide={closeModal} />} 
         </div>
     )
 }
