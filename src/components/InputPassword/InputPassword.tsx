@@ -10,20 +10,24 @@ import ReGenerate from "./../../assets/ReGenerate.png";
 
 import { generatePassword } from "./../../helpers/generatePassword";
 
-export interface InputPasswordProps {
+interface InputPasswordProps {
     value?: string;
     placeholder: string;
     label: string;
     isKey?: boolean;
     setGeneratePassHandler?: any;
     onBlur: Noop;
-    onChange: (...event: any[])=>void;
+    onChange: (...event: any[]) => void;
     ref: RefCallBack;
+    error?: any;
 
 }
-
-const InputPassword = memo(({ /*register, name,changePassHandler,*/ placeholder, label, isKey, setGeneratePassHandler,
-onBlur, onChange, value, ref
+interface InputStyles {
+    padding: string;
+    border: string;
+}
+const InputPassword = memo(({ placeholder, label, isKey, setGeneratePassHandler,
+    onBlur, onChange, value, ref, error
 }: InputPasswordProps) => {
     const [isGeneratePass, setIsGeneratePass] = useState(false);
     const [generatedPass, setGeneratedPass] = useState("");
@@ -40,20 +44,24 @@ onBlur, onChange, value, ref
         }, (err) => {
             console.error('Could not copy text: ', err);
         });
+    };
+
+    const inputStyles: InputStyles = {
+        padding: "8px 8px 8px 16px",
+        border: error ? "1px solid #ff776f" : "1px solid #cbd5e2"
     }
-    console.log(generatedPass, "generatedPass")
+
     return (
         <>
             <label>{label}</label>
             <Input.Password
-                // name={name}
-                // {...register(name)}
-                onBlur={onBlur} onChange={onChange} value={value} ref={ref}
-
+                style={inputStyles}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
+                ref={ref}
                 placeholder={placeholder}
-                // onChange={changePassHandler}
             // iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined 
-            // />)}
             />
             {isKey &&
                 <div className="keyWrapper">

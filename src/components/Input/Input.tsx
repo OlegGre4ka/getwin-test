@@ -1,35 +1,40 @@
+import "./Input.less";
 import { Input as InputAntd } from "antd";
 import { Noop, RefCallBack } from "react-hook-form";
 import { Link } from "react-router-dom";
+
 export interface InputProps {
     label: string;
     placeholder?: string;
     changeEmailHandler?: (e: React.FormEvent<HTMLInputElement>) => void;
     onBlur?: Noop;
     onChange?: (...event: any[]) => void;
-    value?: string;
+    value?: any;
+    // value?: string | undefined;
     ref?: RefCallBack;
     disabled?: boolean | undefined;
     styles?: string;
     isConfirmPhone?: boolean | undefined;
-    isLabelStar?:boolean|undefined;
+    isLabelStar?: boolean | undefined;
+    error?: any;
 
 }
 
-const Input = ({ label, placeholder, onBlur, onChange, value, ref, disabled, styles, isConfirmPhone, isLabelStar }: InputProps) => {
-    const stylesLink: any = {
-        display:"block",
-        position: "relative",
-        zIndex:100,
-        color: "#4e5af2",
-        fontSize: "12px",
-        fontWeight: "600",
-        marginLeft: "430px",
+interface InputStyles {
+    padding: string;
+    border: string;
+}
+
+const Input = ({ label, placeholder, onBlur, onChange, value, ref, disabled, styles, isConfirmPhone, isLabelStar, error }: InputProps) => {
+    const inputStyles: InputStyles = {
+        padding: "8px 8px 8px 16px",
+        border: error ? "1px solid #ff776f" : "1px solid #cbd5e2"
     }
     return (
         <>
-            <label>{label}{isLabelStar&& <span style={{color:"#ff776f"}}>*</span>}</label>
+            <label className="labelInput">{label}{isLabelStar && <span className="labelStar">*</span>}</label>
             <InputAntd
+                style={inputStyles}
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value} ref={ref}
@@ -38,8 +43,8 @@ const Input = ({ label, placeholder, onBlur, onChange, value, ref, disabled, sty
                 disabled={disabled}
             />
             {isConfirmPhone &&
-                <div className="linkWrapper" style={{marginTop:"-23px"}}>
-                    <Link className="link" style={stylesLink} to="confirm-phone">Подтвердить телефон</Link>
+                <div className="linkWrapper" >
+                    <Link className="link" to="confirm-phone">Подтвердить телефон</Link>
                 </div>}
         </>
     );

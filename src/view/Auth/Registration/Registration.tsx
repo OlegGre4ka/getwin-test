@@ -7,8 +7,9 @@ import * as API from "./../../../API/index";
 import Input from "./../../../components/Input/Input";
 import InputPassword from "./../../../components/InputPassword/InputPassword";
 import Button from "./../../../components/Button/Button";
-import useModal from "./../../../hooks/useModal";
-import Modal from "./../../../components/Modal/Modal";
+import { useAppSelector, useAppDispatch } from "./../../../hooks/reduxHooks";
+
+import {setEmailAction} from "./../../../redux/actions/emailAction";
 
 type FormValues = {
     email: string;
@@ -21,7 +22,9 @@ interface IRegistration {
 }
 
 const Registration = ({openModal}:IRegistration) => {
-    // const [isModalOpen, openModal, closeModal] = useModal();
+    const dispatch = useAppDispatch();
+    const email = useAppSelector(state=> state.email.email);
+    console.log(email,"email")
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
     // const [confirmPassword, setConfirmPassword] = useState('');
@@ -46,12 +49,13 @@ const Registration = ({openModal}:IRegistration) => {
 
     const registerFormSubmit: SubmitHandler<FormValues> = async (data) => {
         // const response = await API.postRegister(data);
+        // dispatch({type:"SET_EMAIL",payload: data.email})
+        dispatch(setEmailAction(data.email))
         // console.log(data, response, "data-submit");
         openModal();
     };
 
     return (
-        <>
             <form onSubmit={handleSubmit(registerFormSubmit)}>
                 <div className="inputEmail">
                     <Controller
@@ -59,7 +63,8 @@ const Registration = ({openModal}:IRegistration) => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, onBlur, value, ref } }) => (
-                            <Input label="E-mail" placeholder="Email" onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
+                            <Input label="E-mail" placeholder="Email" error={errors.email}
+                            onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                         )}
                     />
 
@@ -77,7 +82,11 @@ const Registration = ({openModal}:IRegistration) => {
                                 placeholder="Укажите ваш пароль"
                                 isKey={true}
                                 setGeneratePassHandler={(val: string) => setValue("password", val)}
-                                onBlur={onBlur} onChange={onChange} value={value} ref={ref}
+                                onBlur={onBlur} 
+                                onChange={onChange} 
+                                value={value} 
+                                ref={ref}
+                                error={errors.password}
                             />
                         )}
                     />
@@ -98,20 +107,15 @@ const Registration = ({openModal}:IRegistration) => {
                                 onBlur={onBlur}
                                 onChange={onChange}
                                 ref={ref}
+                                error={errors.password}
                             />
                         )}
                     />
                     {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
                 </div>
 
-                <Button type="submit"
-                >Зарегиситрироваться</Button>
-
+                <Button type="submit">Зарегиситрироваться</Button>
             </form>
-            {/* {!isModalOpen && <Modal
-                show={isModalOpen}
-                onHide={closeModal} />} */}
-        </>
     )
 }
 export default Registration

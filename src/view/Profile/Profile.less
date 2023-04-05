@@ -1,14 +1,22 @@
 .profileWrapper {
     display: flex;
     flex-direction: column;
-    align-items: space-between;
+    justify-content: space-between;
+    height: 100%;
     min-width: 984px;
-    // height: 100vh;
-    margin: 24px;
+    // margin: 24px;
 
     .profileForm {
         width: 576px;
-        margin-bottom:202px;
+        margin-top: 48px;
+
+        // margin-bottom: 202px;
+        .profileTitle {
+            color: #20272e;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 48px 0;
+        }
 
         .nameInputsBlock {
             display: flex;
@@ -29,13 +37,26 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        justify-self: flex-end;
-        // margin-top: 736px;
+        // align-self: end;
+        margin: 0 24px 24px 0;
 
-        .backIcon {
-            width: 26px;
-            height: 20px;
+        .exit {
+            display: flex;
+            align-items: center;
             cursor: pointer;
+
+            .backIcon {
+                color: #6d7895;
+                width: 26px;
+                height: 20px;
+            }
+
+            .exitText {
+                color: #6d7895;
+                font-size: 12px;
+                font-weight: 500;
+                margin-left: 12px;
+            }
         }
     }
 }

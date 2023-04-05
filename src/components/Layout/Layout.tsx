@@ -11,7 +11,7 @@ interface ILayout {
 const Layout = ({ isProfile, children }: ILayout) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     let { pathname } = useLocation();
-    console.log(pathname, "location");
+    
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
@@ -20,9 +20,10 @@ const Layout = ({ isProfile, children }: ILayout) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+    
     const list = ["Автоматизация HR", "Интеграция с job-порталами", "Оценка персонала", "Синхронизация с Outlook",
         "Безопасность данных", "Парсинг резюме", "Мультиязычность", "Конструктор отчетности"];
-console.log(isProfile, "isProfile")
+
     return (
         <div className="authWrapper">
             <div className={isProfile ? "descRegWrapper": "descriptionWrapper"}>
