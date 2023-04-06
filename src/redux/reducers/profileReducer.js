@@ -1,7 +1,4 @@
-import { SET_EMAIL, SET_PROFILE } from "./../actions/emailAction";
-// interface IEmail {
-//     email: string;
-// }
+import { SET_PROFILE } from "./../actions/emailAction";
 
 const defaultState = {
     sname: "",
@@ -16,8 +13,8 @@ const defaultState = {
 
 const profileReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case SET_EMAIL:
-            return { ...state, email: action.payload }
+        // case SET_EMAIL:
+        //     return { ...state, email: action.payload }
         case SET_PROFILE:
             return {
                 ...state, sname: action.payload.sname, name: action.payload.name, lname: action.payload.lnamem,
