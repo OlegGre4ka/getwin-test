@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, forwardRef} from 'react';
 import "./InputPassword.less";
 // import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Input } from 'antd';
@@ -26,9 +26,9 @@ interface InputStyles {
     padding: string;
     border: string;
 }
-const InputPassword = memo(({ placeholder, label, isKey, setGeneratePassHandler,
-    onBlur, onChange, value, ref, error
-}: InputPasswordProps) => {
+const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGeneratePassHandler,
+    onBlur, onChange, value, error
+}: InputPasswordProps, ref) => {
     const [isGeneratePass, setIsGeneratePass] = useState(false);
     const [generatedPass, setGeneratedPass] = useState("");
 
@@ -59,7 +59,7 @@ const InputPassword = memo(({ placeholder, label, isKey, setGeneratePassHandler,
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
-                ref={ref}
+                // ref={ref}
                 placeholder={placeholder}
             // iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined 
             />
@@ -92,7 +92,7 @@ const InputPassword = memo(({ placeholder, label, isKey, setGeneratePassHandler,
 
 
     );
-})
+}))
 
 export default InputPassword
 

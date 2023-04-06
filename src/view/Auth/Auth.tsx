@@ -3,6 +3,7 @@ import "./Auth.less";
 import Layout from "./../../components/Layout/Layout";
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
+import {useLocation} from "react-router-dom";
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
 import Modal from "./../../components/Modal/Modal";
@@ -11,7 +12,8 @@ import useModal from "./../../hooks/useModal";
 const Auth: React.FC = () => {
     // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isModalOpen, openModal, closeModal] = useModal();
-    console.log(isModalOpen, "openModal")
+    let location = useLocation();
+    const keyTab = location.state?.keyTab;
     // useEffect(() => {
     //     function handleResize() {
     //         setWindowWidth(window.innerWidth);
@@ -41,13 +43,15 @@ const Auth: React.FC = () => {
     };
     return (
         <Layout>
-            <div className="tabsWrapper">
+            {!isModalOpen && <div className="tabsWrapper">
                 <div className="tabs">
-                    <Tabs defaultActiveKey="2" items={tabsItems} onChange={onChange}
+                    <Tabs defaultActiveKey={keyTab || "2"} items={tabsItems} onChange={onChange}
                     />
                 </div>
-            </div>
+            </div>}
             {isModalOpen && <Modal
+                text1="Аккаунт был успешно зарегистрирован"
+                text2="На ваш E-mail отправлено письмо с ссылкой для подтверждения"
                 onHide={closeModal} />}
         </Layout>
     )

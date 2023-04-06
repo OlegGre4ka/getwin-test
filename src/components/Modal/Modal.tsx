@@ -4,9 +4,11 @@ import CheckCyrcle from "./../../assets/CheckCyrcle.png";
 import { useNavigate } from 'react-router-dom';
 interface IModal {
     onHide: any;
+    text1: string;
+    text2?: string;
 }
 
-const Modal = ({ onHide }: IModal) => {
+const Modal = ({ onHide, text1, text2 }: IModal) => {
 let navigate = useNavigate();
 
     return (
@@ -19,8 +21,8 @@ let navigate = useNavigate();
             </div>
             <div className="checkCyrcle">
                 <img src={CheckCyrcle} alt="CloseButton" />
-                <span className="text1">Аккаунт был успешно зарегистрирован</span>
-                <span className="text2">На ваш E-mail отправлено письмо с ссылкой для подтверждения</span>
+                <span className="text1">{text1}</span>
+                <span className="text2">{text2}</span>
             </div>
 
         </div>

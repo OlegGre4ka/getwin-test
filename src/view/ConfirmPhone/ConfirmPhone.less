@@ -1,0 +1,76 @@
+.confirmPhoneWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 100%;
+    padding-left: 24px;
+
+    // @media screen and (min-width: 481px) and (max-width: 1289px) {
+    //     width: calc(100vw-480px);
+    // }
+
+    @media (max-width:480px) {
+        width: 100vw;
+        max-height: 100%;
+        padding-left: 0px;
+    }
+
+    .confirmPhoneFormWrapper {
+        width: 336px;
+        margin-top: 92px;
+
+        @media (max-width:480px) {
+            margin-top: 35px;
+        }
+
+        .confirmPhoneTitle {
+            color: #20272e;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin: 0;
+        }
+
+        .confirmPhoneText {
+            display: inline-block;
+            color: #47525f;
+            font-size: 12px;
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .confirmPhoneForm {
+            margin-top: 32px;
+
+            .confirmPhoneInput {
+                margin-bottom: 32px;
+            }
+        }
+    }
+
+    .confirmButtonBlock {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 36.5px;
+        cursor: pointer;
+        width: 100%;
+
+        @media (max-width:480px) {
+            width: 336px;
+            margin-top: 32px;
+            margin-bottom:32px;
+        }
+
+        .exitText {
+            color: #6d7895;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+    }
+}

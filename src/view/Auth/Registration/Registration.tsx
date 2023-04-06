@@ -1,4 +1,3 @@
-// import { useState, FormEvent } from "react";
 import "./Registration.less";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +16,7 @@ import { setEmailAction } from "./../../../redux/actions/emailAction";
 type FormValues = {
     email: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
 };
 
 interface IRegistration {
@@ -28,14 +27,11 @@ const Registration = ({ openModal }: IRegistration) => {
     const dispatch = useAppDispatch();
     const email = useAppSelector(state => state.email.email);
     console.log(email, "email")
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [confirmPassword, setConfirmPassword] = useState('');
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Некоректный емейл').required('Это поле должно быть заполнено'),
         password: Yup.string()
-            .required('Required')
+            .required('Это поле должно быть заполнено')
             .matches(
                 /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,14}$/,
                 `Длина пароля должна быть не менее 8 и не более 14 символов.
@@ -43,7 +39,7 @@ const Registration = ({ openModal }: IRegistration) => {
             ),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password')], 'Пароли должны совпадать')
-            .required('Required')
+            .required('Это поле должно быть заполнено')
     });
 
     const { control, setValue, handleSubmit, formState: { errors } } = useForm<FormValues>({
@@ -51,11 +47,16 @@ const Registration = ({ openModal }: IRegistration) => {
     });
 
     const registerFormSubmit: SubmitHandler<FormValues> = async (data) => {
-        // const response = await API.postRegister(data);
         // dispatch({type:"SET_EMAIL",payload: data.email})
+        delete data.confirmPassword;
+        let Data = {...data, ref:"http://example.com"};
+        // const response = await API.postRegister(Data);
         dispatch(setEmailAction(data.email))
-        // console.log(data, response, "data-submit");
+        // localStorage.setItem("user_token","'678e812f99f9422489b45187bfb781e7'");
+        // localStorage.setItem("user_token",response?.data?.user_data?.token);
+        console.log( Data, "data-submit");
         openModal();
+        // response.data.status === "success" && openModal();
     };
 
     return (

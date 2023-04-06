@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Auth from "./view/Auth/Auth";
 import Profile from "./view/Profile/Profile";
 import NotFoundComponent from "./view/NotFoundComponent/NotFoundComponent";
-import ConformTelephone from "./view/ConfirmTelephone/ConfirmTelephone";
+import ConformTelephone from "./view/ConfirmPhone/ConfirmPhone";
 const MainRoutes = () => {
     return (
         <Routes>

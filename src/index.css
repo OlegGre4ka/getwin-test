@@ -15,6 +15,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/* #root {
-  height: 100%;
-} */
+.labelStar {
+  color: #ff776f !important;
+}
+h1,h2{
+  margin:0;
+}

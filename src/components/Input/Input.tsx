@@ -1,9 +1,10 @@
+import {forwardRef} from 'react';
 import "./Input.less";
 import { Input as InputAntd } from "antd";
 import { Noop, RefCallBack } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-export interface InputProps {
+interface InputProps {
     label: string;
     placeholder?: string;
     changeEmailHandler?: (e: React.FormEvent<HTMLInputElement>) => void;
@@ -25,7 +26,7 @@ interface InputStyles {
     border: string;
 }
 
-const Input = ({ label, placeholder, onBlur, onChange, value, ref, disabled, styles, isConfirmPhone, isLabelStar, error }: InputProps) => {
+const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disabled, styles, isConfirmPhone, isLabelStar, error }: InputProps, ref) => {
     const inputStyles: InputStyles = {
         padding: "8px 8px 8px 16px",
         border: error ? "1px solid #ff776f" : "1px solid #cbd5e2"
@@ -37,7 +38,8 @@ const Input = ({ label, placeholder, onBlur, onChange, value, ref, disabled, sty
                 style={inputStyles}
                 onBlur={onBlur}
                 onChange={onChange}
-                value={value} ref={ref}
+                value={value} 
+                // ref={ref}
                 className={styles}
                 placeholder={placeholder}
                 disabled={disabled}
@@ -48,6 +50,6 @@ const Input = ({ label, placeholder, onBlur, onChange, value, ref, disabled, sty
                 </div>}
         </>
     );
-}
+})
 export default Input
 

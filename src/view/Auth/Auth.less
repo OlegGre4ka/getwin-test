@@ -1,75 +1,24 @@
-// .authWrapper {
-//     display: grid;
-//     grid-template-columns: 1fr 1fr;
-//     // grid-gap: 0px;
-//     height: 100vh;
-
-//     .descriptionWrapper {
-//         max-width: 600px;
-//         background: linear-gradient(180deg, #8892ff 0%, #6d6be5 18.75%);
-
-//         .descriptionBlock {
-//             margin: 92px 42px 0px 64px;
-
-//             h1 {
-//                 font-size: 36px;
-//                 color: white;
-//                 margin: 0 0 24px 0;
-//             }
-
-//             .description {
-//                 color: #EDF2FF;
-//                 font-size: 18px;
-//                 font-weight: 400;
-//                 margin-bottom: 72px;
-//             }
-
-//             .listContainer {
-//                 display: flex;
-//                 flex-wrap: wrap;
-
-//                 .listElement {
-//                     display: flex;
-//                     width: 244px;
-
-//                     .square {
-//                         display: flex;
-//                         justify-content: center;
-//                         align-items: center;
-//                         width: 18.5px;
-//                         height: 18.5px;
-//                         border: 1.5px solid #84df88;
-//                         border-radius: 5px;
-//                         margin-right: 10.75px;
-//                     }
-
-//                     .textElement {
-//                         color: #ffffff;
-//                         font-size: 14px;
-//                         font-weight: 500;
-//                         margin-bottom: 24px;
-//                     }
-//                 }
-//             }
-
-//             .group {
-//                 width: 600px;
-//                 height: 280px;
-//                 margin-top: 16px;
-//             }
-//         }
-//     }
-
     .tabsWrapper {
         display: flex;
         justify-content: center !important;
-        min-width: 884px;
-        padding-top: 104px;
-
-        .tabs {
-            width: 336px;
+        height: 100%;
+        max-width: 100%;
+        padding-left: 24px;
+  
+        @media (max-width:480px) {
+            min-width: 100vw;
+            padding-left: 0px;
         }
 
+        .tabs {
+            margin-top: 109px;
+            width: 336px;
+
+            @media (max-width:480px) {
+                  margin-top:15px;
+                }
+        }
+      
         .ant-tabs-nav-list {
             display: flex;
             align-items: center;
@@ -92,4 +41,3 @@
             border-radius: 4px 4px 0 0;
           }
     }
-// }

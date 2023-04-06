@@ -12,19 +12,26 @@
 }
 
 .primary{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    &:extend(.button);
     color: white;
     background-color: #5e6bf6;
     width: 89px;
     height: 24px;
     border: 1px solid transparent;
-    border-radius: 20px;
-    padding: 12px 24px;
-    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
 }
-
+.primary-216{
+    &:extend(.primary);
+    width: 216px;
+    height:40px;
+}
+.white-216{
+    &:extend(.primary-216);
+    color: #8d97b0;
+    background-color: white;
+    border: 1px solid #8d97b0;
+}
 .socialBtn{
     width: 104px;
     background-color: white;

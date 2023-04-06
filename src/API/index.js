@@ -1,3 +1,4 @@
 export {
-    postRegister
+    postRegister,
+    postCreateProfile
 } from "./auth";

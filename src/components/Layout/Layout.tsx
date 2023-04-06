@@ -37,13 +37,13 @@ const Layout = ({ isProfile, children }: ILayout) => {
                             </div>)}
                         </div>
                     </>)}
-                    {pathname === "/profile" && (<>
+                    {(pathname === "/profile" || pathname === "/profile/confirm-phone") && (<>
                         <h2>Регистрация пользователя</h2>
-                        <p className="descProfile">Заполните информацию о себе, чтобы<br/> начать использовать все преимущества платформы</p>
+                        <p className="descProfile">Заполните информацию о себе, чтобы начать использовать все преимущества платформы</p>
                     </>)}
                 </div>
-                {(windowWidth > 1290 || windowWidth < 480 || pathname === "/profile" ) && <img src={Group} className="group" alt="Group" />}
-                {/* {pathname === "/profile" && <img src={Group} className="group" alt="Group" />} */}
+                {/* {(windowWidth > 1290 || windowWidth < 480 || pathname === "/profile" ) && <img src={Group} className="group" alt="Group" />} */}
+                <img src={Group} className="group" alt="Group" />
 
             </div>
 

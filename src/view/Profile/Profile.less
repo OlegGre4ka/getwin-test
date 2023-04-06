@@ -3,16 +3,18 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    // min-width: 984px;
-    min-width: 1024px;
-    // min-width: fit-content;
+    padding-left: 24px;
+    max-width: 100%;
     padding-left: 24px;
 
+    @media screen and (min-width: 481px) and (max-width: 1289px) {
+        width: 100%;
+    }
+
     @media (max-width:480px) {
-        min-width: 100vw;
+        width: 100vw;
+        max-height: 100vh;
         padding-left: 0px;
-        // padding-left:12px;
-        // padding-right: 12px;
     }
 
     .profileForm {
@@ -21,8 +23,8 @@
 
         @media (max-width:480px) {
             width: 360px;
+            margin-top: 15px;
             padding-left: 14px;
-            // padding-right: 12px;
         }
 
         .profileTitle {
@@ -55,11 +57,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // flex-grow:1;
-        // max-width:100%;
         margin: 0 24px 24px 0;
-        // width: 552px;
 
+        @media screen and (min-width: 481px) and (max-width: 1289px) {
+            width: 552px;
+        }
         @media (max-width:480px) {
             width: 360px;
             padding-left: 14px;
@@ -81,7 +83,7 @@
                 color: #6d7895;
                 font-size: 12px;
                 font-weight: 500;
-                // margin-left: 12px;
+                margin-left: 12px;
             }
         }
     }
