@@ -1,6 +1,8 @@
-import {forwardRef} from 'react';
+import { forwardRef } from 'react';
 import "./Input.less";
 import { Input as InputAntd } from "antd";
+import InputMask from 'react-input-mask';
+
 import { Noop, RefCallBack } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -18,7 +20,8 @@ interface InputProps {
     isConfirmPhone?: boolean | undefined;
     isLabelStar?: boolean | undefined;
     error?: any;
-
+    isInputMask?: boolean;
+    mask?:string | any;
 }
 
 interface InputStyles {
@@ -26,29 +29,50 @@ interface InputStyles {
     border: string;
 }
 
-const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disabled, styles, isConfirmPhone, isLabelStar, error }: InputProps, ref) => {
+const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disabled, styles, isConfirmPhone, isLabelStar, error,
+    isInputMask, mask }: InputProps, ref) => {
     const inputStyles: InputStyles = {
         padding: "8px 8px 8px 16px",
-        border: error ? "1px solid #ff776f" : "1px solid #cbd5e2"
+        border: error ? "1px solid #ff776f" : "1px solid #cbd5e2",
+        // color: "red"
     }
     return (
-        <>
+        <div style={{ display: "flex", flexDirection: "column" }}>
             <label className="labelInput">{label}{isLabelStar && <span className="labelStar">*</span>}</label>
-            <InputAntd
-                style={inputStyles}
-                onBlur={onBlur}
-                onChange={onChange}
-                value={value} 
-                // ref={ref}
-                className={styles}
-                placeholder={placeholder}
-                disabled={disabled}
-            />
+            {isInputMask
+                ? <InputMask
+                    mask={mask}
+                    // maskChar="_"
+                    // style={inputStyles}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    value={value}
+                >
+                    <InputAntd
+                        style={inputStyles}
+                        onBlur={onBlur}
+                        onChange={onChange}
+                        value={value}
+                        className={styles}
+                        placeholder={placeholder}
+                        disabled={disabled}
+                    />
+                </InputMask>
+                : <InputAntd
+                    style={inputStyles}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    value={value}
+                    className={styles}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                />}
+
             {isConfirmPhone &&
                 <div className="linkWrapper" >
                     <Link className="link" to="confirm-phone">Подтвердить телефон</Link>
                 </div>}
-        </>
+        </div>
     );
 })
 export default Input

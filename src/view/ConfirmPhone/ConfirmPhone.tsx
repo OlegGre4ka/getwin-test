@@ -8,6 +8,7 @@ import { useAppSelector } from "../../hooks/reduxHooks";
 
 const ConfirmTelephone = () => {
     let navigate = useNavigate();
+    const phone = useAppSelector(state => state.profile.phone);
 
     return (
         <Layout isProfile={true}>
@@ -15,18 +16,20 @@ const ConfirmTelephone = () => {
 
                 <div className="confirmPhoneFormWrapper">
                     <h1 className="confirmPhoneTitle">Подтверждение телефона</h1>
-                    <span className="confirmPhoneText">Мы отправили SMS с 6-значным кодом<br/> подтверждения на номер</span>
+                    <span className="confirmPhoneText">
+                        Мы отправили SMS с 6-значным кодом<br /> подтверждения на номер {phone}
+                    </span>
                     <form className="confirmPhoneForm">
                         <div className="confirmPhoneInput">
-                            <Input label="SMS-код" placeholder="Укажите код"/>
+                            <Input label="SMS-код" placeholder="Укажите код" />
                         </div>
                         <Button type="submit">Подтвердить</Button>
                     </form>
                 </div>
                 <div className="confirmButtonBlock" onClick={() => navigate("/profile")}>
-                     {/* <div className="exit" onClick={() => navigate("/profile")}> */}
-                        <img className="backIcon" src={ArrowLeft} alt="BackIcon" />
-                        <span className="exitText">Назад</span>
+                    {/* <div className="exit" onClick={() => navigate("/profile")}> */}
+                    <img className="backIcon" src={ArrowLeft} alt="BackIcon" />
+                    <span className="exitText">Назад</span>
                     {/* </div> */}
                 </div>
 

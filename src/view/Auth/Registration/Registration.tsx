@@ -11,7 +11,7 @@ import Facebook from "./../../../assets/Facebook.png";
 import Linkedin from "./../../../assets/Linkedin.png";
 
 import { useAppSelector, useAppDispatch } from "./../../../hooks/reduxHooks";
-import { setEmailAction } from "./../../../redux/actions/emailAction";
+import { setEmailAction, setProfileAction } from "./../../../redux/actions/emailAction";
 
 type FormValues = {
     email: string;
@@ -25,8 +25,8 @@ interface IRegistration {
 
 const Registration = ({ openModal }: IRegistration) => {
     const dispatch = useAppDispatch();
-    const email = useAppSelector(state => state.email.email);
-    console.log(email, "email")
+    // const email = useAppSelector(state => state.email.email);
+    // console.log(email, "email")
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Некоректный емейл').required('Это поле должно быть заполнено'),
