@@ -42,7 +42,9 @@ const Layout = ({ isProfile, children }: ILayout) => {
                         <p className="descProfile">Заполните информацию о себе, чтобы<br/> начать использовать все преимущества платформы</p>
                     </>)}
                 </div>
-                {windowWidth > 1290 && <img src={Group} className="group" alt="Group" />}
+                {(windowWidth > 1290 || windowWidth < 480 || pathname === "/profile" ) && <img src={Group} className="group" alt="Group" />}
+                {/* {pathname === "/profile" && <img src={Group} className="group" alt="Group" />} */}
+
             </div>
 
             {children}

@@ -2,12 +2,17 @@
     position: absolute;
     top: 0;
     left: 0;
+    right:0;
+    bottom:0;
     z-index: 1000;
     width: 100%;
-    height: 100%;
-    // background-color: blue;
+    height: 100vh;
     background: linear-gradient(180deg, #8892ff 0%, #6d6be5 18.75%);
 
+    // @media (max-width:480px) {
+    //     width: 100%;
+    //     height: 100vh;
+    // }
     .closeButton{
         display: flex;
         justify-content: flex-end;
@@ -17,7 +22,6 @@
     .checkCyrcle {
         display: flex;
         flex-direction: column;
-        // justify-content: center;
         align-items: center;
         margin-top: 272px;
     }
@@ -29,6 +33,7 @@
 
     .text2{
         color: #EDF2FF;
+        padding: 12px 26px;
 
     }
 }

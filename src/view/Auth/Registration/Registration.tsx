@@ -7,9 +7,12 @@ import * as API from "./../../../API/index";
 import Input from "./../../../components/Input/Input";
 import InputPassword from "./../../../components/InputPassword/InputPassword";
 import Button from "./../../../components/Button/Button";
-import { useAppSelector, useAppDispatch } from "./../../../hooks/reduxHooks";
+import Google from "./../../../assets/Google.png";
+import Facebook from "./../../../assets/Facebook.png";
+import Linkedin from "./../../../assets/Linkedin.png";
 
-import {setEmailAction} from "./../../../redux/actions/emailAction";
+import { useAppSelector, useAppDispatch } from "./../../../hooks/reduxHooks";
+import { setEmailAction } from "./../../../redux/actions/emailAction";
 
 type FormValues = {
     email: string;
@@ -21,10 +24,10 @@ interface IRegistration {
     openModal: any;
 }
 
-const Registration = ({openModal}:IRegistration) => {
+const Registration = ({ openModal }: IRegistration) => {
     const dispatch = useAppDispatch();
-    const email = useAppSelector(state=> state.email.email);
-    console.log(email,"email")
+    const email = useAppSelector(state => state.email.email);
+    console.log(email, "email")
     // const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
     // const [confirmPassword, setConfirmPassword] = useState('');
@@ -56,6 +59,7 @@ const Registration = ({openModal}:IRegistration) => {
     };
 
     return (
+        <>
             <form onSubmit={handleSubmit(registerFormSubmit)}>
                 <div className="inputEmail">
                     <Controller
@@ -64,7 +68,7 @@ const Registration = ({openModal}:IRegistration) => {
                         rules={{ required: true }}
                         render={({ field: { onChange, onBlur, value, ref } }) => (
                             <Input label="E-mail" placeholder="Email" error={errors.email}
-                            onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
+                                onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                         )}
                     />
 
@@ -82,9 +86,9 @@ const Registration = ({openModal}:IRegistration) => {
                                 placeholder="Укажите ваш пароль"
                                 isKey={true}
                                 setGeneratePassHandler={(val: string) => setValue("password", val)}
-                                onBlur={onBlur} 
-                                onChange={onChange} 
-                                value={value} 
+                                onBlur={onBlur}
+                                onChange={onChange}
+                                value={value}
                                 ref={ref}
                                 error={errors.password}
                             />
@@ -114,8 +118,25 @@ const Registration = ({openModal}:IRegistration) => {
                     {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
                 </div>
 
-                <Button type="submit">Зарегиситрироваться</Button>
+                <Button type="submit">Зарегистрироваться</Button>
             </form>
+            <div className="socialTitleBlock">
+                <span className="line"></span>
+                <span className="socialMediaTitle">Или войдите с помощью</span>
+                <span className="line"></span>
+            </div>
+            <div className="socialButtonsBlock">
+                <Button btnStyle="socialBtn">
+                    <img src={Google} alt="Google" />
+                </Button>
+                <Button btnStyle="socialBtn">
+                    <img src={Facebook} alt="Google" />
+                </Button>
+                <Button btnStyle="socialBtn">
+                    <img src={Linkedin} alt="Google" />
+                </Button>
+            </div>
+        </>
     )
 }
 export default Registration

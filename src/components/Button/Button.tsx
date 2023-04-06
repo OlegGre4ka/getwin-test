@@ -4,12 +4,12 @@ import "./Button.less";
 interface ButtonProps{
     type?: 'button'| 'submit' | 'reset';
     clickHandler?: () => void;
-    children: string;
+    children: string | any;
     disabled?: boolean;
     btnStyle?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ type, clickHandler, children, disabled = false,btnStyle }) => {
+const Button: React.FC<ButtonProps> = ({ type, clickHandler, children, disabled = false, btnStyle }) => {
 
     return (
         <button 

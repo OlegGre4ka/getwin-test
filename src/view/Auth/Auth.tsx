@@ -1,18 +1,17 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import "./Auth.less";
-import Stroke3 from "./../../assets/Stroke3.png";
-import Group from "./../../assets/Group.png";
 import Layout from "./../../components/Layout/Layout";
-import { Tabs, ConfigProvider } from 'antd';
+import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import Login from "./Login/Login";
 import Registration from "./Registration/Registration";
 import Modal from "./../../components/Modal/Modal";
 import useModal from "./../../hooks/useModal";
+
 const Auth: React.FC = () => {
     // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [isModalOpen, openModal, closeModal] = useModal();
-console.log(isModalOpen, "openModal")
+    console.log(isModalOpen, "openModal")
     // useEffect(() => {
     //     function handleResize() {
     //         setWindowWidth(window.innerWidth);
@@ -33,7 +32,7 @@ console.log(isModalOpen, "openModal")
         {
             key: '2',
             label: `Регистрация`,
-            children: <Registration openModal={openModal}/>,
+            children: <Registration openModal={openModal} />,
         },
     ];
 
@@ -41,38 +40,15 @@ console.log(isModalOpen, "openModal")
         console.log(key);
     };
     return (
-        // <div className="authWrapper">
-        //     <div className="descriptionWrapper">
-        //         <div className="descriptionBlock">
-        //             <h1>Войти в аккаунт</h1>
-        //             <p className="description">Введите ваш E-mail и пароль, чтобы начать<br /> использовать все преимущества платформы:</p>
-        //             <div className="listContainer">
-        //                 {list.map((el,i) => <div className="listElement" key={i}>
-        //                     <span className="square"><img src={Stroke3} alt="" /></span><span className="textElement">{el}</span>
-        //                 </div>)}
-        //             </div>
-        //         </div>
-        //         {windowWidth > 1290 && <img src={Group} className="group" alt="Group" />}
-        //     </div>
         <Layout>
             <div className="tabsWrapper">
                 <div className="tabs">
-                    {/* <ConfigProvider
-                        theme={{
-                            token: {
-                                colorPrimary: '#3943ed',
-                            },
-                        }}
-                    > */}
-                        <Tabs defaultActiveKey="2" items={tabsItems} onChange={onChange}
-                            // tabBarStyle={{ width: "336px", margin: 0 }}
-                             />
-                    {/* </ConfigProvider> */}
+                    <Tabs defaultActiveKey="2" items={tabsItems} onChange={onChange}
+                    />
                 </div>
             </div>
-               {isModalOpen && <Modal
+            {isModalOpen && <Modal
                 onHide={closeModal} />}
-                
         </Layout>
     )
 }

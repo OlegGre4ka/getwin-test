@@ -50,7 +50,9 @@ const Profile = () => {
                             <img className="backIcon" src={BackIcon} alt="BackIcon" />
                             <span className="exitText">Выход</span>
                         </div>
+                        <div>
                         <Button btnStyle="primary">Далее</Button>
+                        </div>
                     </div>
                 </div>
             </Layout>
