@@ -25,6 +25,7 @@ interface InputPasswordProps {
 interface InputStyles {
     padding: string;
     border: string;
+    position: any;
 }
 const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGeneratePassHandler,
     onBlur, onChange, value, error
@@ -48,11 +49,12 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
 
     const inputStyles: InputStyles = {
         padding: "8px 8px 8px 16px",
-        border: error ? "1px solid #ff776f" : "1px solid #cbd5e2"
+        border: error ? "1px solid #ff776f" : "1px solid #cbd5e2",
+        position: "relative"
     }
-
+console.log(generatedPass, "generatedPass");
     return (
-        <>
+        <div className="inputPassWrapper">
             <label>{label}</label>
             <Input.Password
                 style={inputStyles}
@@ -70,7 +72,7 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
                         : <div className="imgBox" onClick={() => setIsGeneratePass(!isGeneratePass)}><img className="imgKey" src={Key} alt="Key" /></div>}
                 </div>
             }
-            {isGeneratePass && <div className="generatePassWrapper" >
+            {isGeneratePass && <div className="generatePassDropdown" >
                 <div className="option">
                     <span>{generatedPass}</span>
                     <div>
@@ -88,7 +90,7 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
                     <span>Применить сгенерированный пароль</span>
                 </div>
             </div>}
-        </>
+        </div>
 
 
     );

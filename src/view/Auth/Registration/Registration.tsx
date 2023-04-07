@@ -5,13 +5,14 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import * as API from "./../../../API/index";
 import Input from "./../../../components/Input/Input";
 import InputPassword from "./../../../components/InputPassword/InputPassword";
+import Error from "./../../../components/Error/Error";
 import Button from "./../../../components/Button/Button";
 import Google from "./../../../assets/Google.png";
 import Facebook from "./../../../assets/Facebook.png";
 import Linkedin from "./../../../assets/Linkedin.png";
 
 import { useAppSelector, useAppDispatch } from "./../../../hooks/reduxHooks";
-import { setEmailAction, setProfileAction } from "./../../../redux/actions/emailAction";
+import { setEmailAction } from "./../../../redux/actions/emailAction";
 
 type FormValues = {
     email: string;
@@ -73,7 +74,7 @@ const Registration = ({ openModal }: IRegistration) => {
                         )}
                     />
 
-                    {errors.email && <span className="error">{errors.email.message}</span>}
+                    {errors.email && <Error>{errors.email.message}</Error>}
                 </div>
 
                 <div className="inputPass">
@@ -96,7 +97,7 @@ const Registration = ({ openModal }: IRegistration) => {
                         )}
                     />
 
-                    {errors.password && <span className="error">{errors.password.message}</span>}
+                    {errors.password && <Error>{errors.password.message}</Error>}
                 </div>
 
                 <div className="inputConfirmPass">
@@ -116,7 +117,7 @@ const Registration = ({ openModal }: IRegistration) => {
                             />
                         )}
                     />
-                    {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
+                    {errors.confirmPassword && <Error>{errors.confirmPassword.message}</Error>}
                 </div>
 
                 <Button type="submit">Зарегистрироваться</Button>

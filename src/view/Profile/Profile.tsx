@@ -1,11 +1,11 @@
 import Layout from "./../../components/Layout/Layout";
 import "./Profile.less";
 import BackIcon from "./../../assets/BackIcon.png";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button/Button";
 import Input from "./../../components/Input/Input";
-import InputMask, { Props as InputMaskProps } from 'react-input-mask';
 import Select from "./../../components/Select/Select";
+import Error from "./../../components/Error/Error";
 import * as API from "./../../API/index";
 import Modal from "./../../components/Modal/Modal";
 import LogoutModal from "./../../components/LogoutModaL/LogoutModal";
@@ -26,14 +26,10 @@ type FormValues = {
 
 };
 
-// interface IModal {
-//     isModalOpen: boolean;
-//     openModal: () => void;
-//     closeModal: () => void;
-//   }
+
 const Profile = () => {
-    let navigate = useNavigate();
-    const email = useAppSelector(state => state.email.email);
+    // let navigate = useNavigate();
+    const email = useAppSelector(state => state.profile.email);
     const dispatch = useAppDispatch();
 
     const [isModalOpen, openModal, closeModal]: any = useModal();
@@ -55,7 +51,7 @@ const Profile = () => {
 
     });
 
-    const { control, setValue, handleSubmit, formState: { errors } } = useForm<FormValues>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: yupResolver(validationSchema)
     });
 
@@ -90,7 +86,7 @@ const Profile = () => {
                                     )}
                                 />
 
-                                {errors.sname && <span className="error">{errors.sname.message}</span>}
+                                {errors.sname && <Error>{errors.sname.message}</Error>}
                             </div>
 
                             <div className="nameInput">
@@ -104,7 +100,7 @@ const Profile = () => {
                                     )}
                                 />
 
-                                {errors.name && <span className="error">{errors.name.message}</span>}
+                                {errors.name && <Error>{errors.name.message}</Error>}
                             </div>
 
                             <div className="nameInput">
@@ -118,7 +114,7 @@ const Profile = () => {
                                     )}
                                 />
 
-                                {errors.lname && <span className="error">{errors.lname.message}</span>}
+                                {errors.lname && <Error>{errors.lname.message}</Error>}
                             </div>
                         </div>
                         <div className="inputProfile">
@@ -133,7 +129,7 @@ const Profile = () => {
                                 )}
                             />
 
-                            {errors.birth_date && <span className="error">{errors.birth_date.message}</span>}
+                            {errors.birth_date && <Error>{errors.birth_date.message}</Error>}
                         </div>
                         <div className="inputProfile">
                             <Controller
@@ -146,7 +142,7 @@ const Profile = () => {
                                 )}
                             />
 
-                            {errors.gender_id && <span className="error">{errors.gender_id.message}</span>}
+                            {errors.gender_id && <Error>{errors.gender_id.message}</Error>}
                         </div>
                         <div className="inputProfile">
                             <Controller
@@ -161,7 +157,7 @@ const Profile = () => {
                                 )}
                             />
 
-                            {errors.phone && <span className="error">{errors.phone.message}</span>}
+                            {errors.phone && <Error>{errors.phone.message}</Error>}
                         </div>
 
                         <div className="inputProfile">

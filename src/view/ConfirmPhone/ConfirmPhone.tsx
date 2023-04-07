@@ -27,7 +27,6 @@ const ConfirmTelephone = () => {
                     </form>
                 </div>
                 <div className="confirmButtonBlock" onClick={() => navigate("/profile")}>
-                    {/* <div className="exit" onClick={() => navigate("/profile")}> */}
                     <img className="backIcon" src={ArrowLeft} alt="BackIcon" />
                     <span className="exitText">Назад</span>
                     {/* </div> */}

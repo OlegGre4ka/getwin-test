@@ -41,6 +41,8 @@ const Auth: React.FC = () => {
     const onChange = (key: string) => {
         console.log(key);
     };
+
+    console.log(keyTab, "keyTab")
     return (
         <Layout>
             {!isModalOpen && <div className="tabsWrapper">

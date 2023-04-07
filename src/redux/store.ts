@@ -1,10 +1,10 @@
 import {createStore, combineReducers, applyMiddleware} from "redux";
-import setEmailReducer from "./reducers/setEmailReducer";
+// import setEmailReducer from "./reducers/setEmailReducer";
 import profileReducer from "./reducers/profileReducer";
 
 import thunk from "redux-thunk";
 
-const rootReducer = combineReducers({email:setEmailReducer, profile: profileReducer});
+const rootReducer = combineReducers({/*email:setEmailReducer,*/ profile: profileReducer});
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
