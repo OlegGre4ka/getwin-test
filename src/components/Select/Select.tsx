@@ -19,18 +19,28 @@ interface SelectProps {
     error?: any;
 }
 
-const Select = forwardRef(({ label, placeholder, isLabelStar, onBlur, onChange, value }: SelectProps, ref) => {
+const Select = forwardRef(({ label, placeholder, isLabelStar, onBlur, onChange, value, error }: SelectProps, ref) => {
 
     const [isArrowIcon, setIsArrowIcon] = useState(false);
-
+    // const handleDropdownVisibleChange = (open: boolean) => {
+    //     console.log(`Dropdown opened: ${open}`);
+    // }
     return (
         <div className="selectWrapper">
             <label className="labelInput">{label}{isLabelStar && <span className="labelStar">*</span>}</label>
             <SelectAntd
-                onClick={() => setIsArrowIcon(!isArrowIcon)}
+                onDropdownVisibleChange={(open) => setIsArrowIcon(open)}
+                // onClick={() => setIsArrowIcon(!isArrowIcon)}
                 placeholder={placeholder}
-                suffixIcon={ <img src={isArrowIcon ? ArrowSelectUp : ArrowSelect} alt="" />}
-                // style={{ width: 120 }}
+                suffixIcon={<img src={isArrowIcon ? ArrowSelectUp : ArrowSelect} alt="" />}
+                style={{
+                    // padding: "8px 8px 8px 16px",
+                    border: error ? "2px solid #ff776f" : "2px solid #cbd5e2",
+                    borderRadius: "4px",
+
+                }}
+                bordered={false}
+                size={"large"}
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}

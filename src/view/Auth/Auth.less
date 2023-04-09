@@ -4,6 +4,22 @@
         height: 100%;
         max-width: 100%;
         padding-left: 24px;
+        overflow-y: auto;
+        // overflow: -moz-scrollbars-none;
+        // -ms-overflow-style: none;
+    
+        // &::-webkit-scrollbar {
+        //     width: 0;
+        // }
+        &::-webkit-scrollbar{
+            -webkit-appearance: none;
+            width: 6px;
+        }
+    
+        &::-webkit-scrollbar-thumb{
+            background-color: #4e5af2;
+            border-radius: 2px;
+        }
   
         @media (max-width:480px) {
             min-width: 100vw;

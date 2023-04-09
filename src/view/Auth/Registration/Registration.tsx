@@ -28,16 +28,19 @@ const Registration = ({ openModal }: IRegistration) => {
     const dispatch = useAppDispatch();
     // const email = useAppSelector(state => state.email.email);
     // console.log(email, "email")
-
     const validationSchema = Yup.object().shape({
-        email: Yup.string().email('Некоректный емейл').required('Это поле должно быть заполнено'),
+        email: Yup.string()
+            .email('Некоректный емейл')
+            .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Некоректный емейл')
+            .required('Это поле должно быть заполнено'),
         password: Yup.string()
-            .required('Это поле должно быть заполнено')
+            .min(8, "Длина пароля должна быть не менее 8 и не более 14 символов.")
+            .max(14, "Длина пароля должна быть не менее 8 и не более 14 символов.")
             .matches(
-                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,14}$/,
-                `Длина пароля должна быть не менее 8 и не более 14 символов.
-                Пароль должен состоять из букв латинского алфавита (A-z), арабских цифр (0-9)`
-            ),
+                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,14}$/,
+                'Пароль должен состоять из букв латинского алфавита (A-z), арабских цифр (0-9)'
+            )
+            .required('Это поле должно быть заполнено'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password')], 'Пароли должны совпадать')
             .required('Это поле должно быть заполнено')
@@ -50,12 +53,12 @@ const Registration = ({ openModal }: IRegistration) => {
     const registerFormSubmit: SubmitHandler<FormValues> = async (data) => {
         // dispatch({type:"SET_EMAIL",payload: data.email})
         delete data.confirmPassword;
-        let Data = {...data, ref:"http://example.com"};
+        let Data = { ...data, ref: "http://example.com" };
         // const response = await API.postRegister(Data);
         dispatch(setEmailAction(data.email))
         // localStorage.setItem("user_token","'678e812f99f9422489b45187bfb781e7'");
         // localStorage.setItem("user_token",response?.data?.user_data?.token);
-        console.log( Data, "data-submit");
+        console.log(Data, "data-submit");
         openModal();
         // response.data.status === "success" && openModal();
     };
@@ -69,8 +72,14 @@ const Registration = ({ openModal }: IRegistration) => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, onBlur, value, ref } }) => (
-                            <Input label="E-mail" placeholder="Email" error={errors.email}
-                                onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
+                            <Input
+                                label="E-mail"
+                                placeholder="Email"
+                                error={errors.email}
+                                onBlur={onBlur}
+                                onChange={onChange}
+                                value={value}
+                                ref={ref} />
                         )}
                     />
 
@@ -83,21 +92,26 @@ const Registration = ({ openModal }: IRegistration) => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, onBlur, value, ref } }) => (
-                            <InputPassword
-                                label="Придумайте пароль"
-                                placeholder="Укажите ваш пароль"
-                                isKey={true}
-                                setGeneratePassHandler={(val: string) => setValue("password", val)}
-                                onBlur={onBlur}
-                                onChange={onChange}
-                                value={value}
-                                ref={ref}
-                                error={errors.password}
-                            />
+                            <>
+                                {console.log(value, "In Reg-InputPassword")}
+                                <InputPassword
+                                    label="Придумайте пароль"
+                                    placeholder="Укажите ваш пароль"
+                                    isKey={true}
+                                    setGeneratePassHandler={(val: string) => {
+                                        setValue("password", val, { shouldValidate: true });
+                                        console.log(val, "val in Registration");
+                                    }}
+                                    onBlur={onBlur}
+                                    onChange={onChange}
+                                    value={value}
+                                    ref={ref}
+                                    error={errors.password}
+                                />
+                            </>
                         )}
                     />
-
-                    {errors.password && <Error>{errors.password.message}</Error>}
+                    {errors.password && <Error type={errors.password.type}>{errors.password.message}</Error>}
                 </div>
 
                 <div className="inputConfirmPass">
@@ -113,7 +127,7 @@ const Registration = ({ openModal }: IRegistration) => {
                                 onBlur={onBlur}
                                 onChange={onChange}
                                 ref={ref}
-                                error={errors.password}
+                                error={errors.confirmPassword}
                             />
                         )}
                     />

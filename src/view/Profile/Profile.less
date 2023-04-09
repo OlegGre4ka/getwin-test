@@ -6,6 +6,22 @@
     padding-left: 24px;
     max-width: 100%;
     padding-left: 24px;
+    overflow-y: auto;
+    // overflow: -moz-scrollbars-none;
+    // -ms-overflow-style: none;
+
+    // &::-webkit-scrollbar {
+    //     width: 0;
+    // }
+    &::-webkit-scrollbar{
+        -webkit-appearance: none;
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb{
+        background-color: #4e5af2;
+        border-radius: 2px;
+    }
 
     @media screen and (min-width: 481px) and (max-width: 1289px) {
         width: 100%;
@@ -62,6 +78,7 @@
         @media screen and (min-width: 481px) and (max-width: 1289px) {
             width: 552px;
         }
+
         @media (max-width:480px) {
             width: 360px;
             padding-left: 14px;

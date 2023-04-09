@@ -34,6 +34,7 @@ const Profile = () => {
 
     const [isModalOpen, openModal, closeModal]: any = useModal();
     const [isLogoutModalOpen, openLogoutModal, closeLogoutModal]: any = useModal();
+    const now = new Date();
 
 
     const validationSchema = Yup.object().shape({
@@ -42,6 +43,79 @@ const Profile = () => {
         sname: Yup.string()
             .required('Введите свою фамилию'),
         birth_date: Yup.string()
+            // .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, 'Некоректний формат дати')
+            .matches(
+                /^(\d{2})\/(\d{2})\/(\d{4})$/,
+                'Неверный формат даты. Введите дату в формате dd/mm/yyyy'
+            )
+            .test('valid-date', 'Введите коректную дату', (value: any) => {
+                const currentYear = new Date().getFullYear();
+                const minYear = currentYear - 100;
+                const [day, month, year] = value.split('/').map((num: any) => parseInt(num));
+                const date = new Date(year, month - 1, day);
+
+                if (month > 12) {
+                    return false;
+                }
+
+                if ([4, 6, 9, 11].includes(month) && day > 30) {
+                    return false;
+                }
+                if ([1,3,5,7,8,10,12].includes(month) && day > 31) {
+                    return false;
+                }
+                if (month === 2) {
+                    const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+                    if (isLeapYear && day > 29) {
+                        return false;
+                    } else if (!isLeapYear && day > 28) {
+                        return false;
+                    }
+                }
+                return date.getFullYear() >= minYear && date.getFullYear() <= currentYear;
+            })
+            // .test('valid-date', 'Введіть коректну дату', (value: any) => {
+            //     const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+            //     const now = new Date();
+            //     const maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            //     const minDate = new Date(now.getFullYear() - 100, now.getMonth(), now.getDate());
+
+            //     if (!regex.test(value)) {
+            //         return false;
+            //     }
+
+            //     const [day, month, year]: any = regex.exec(value);
+
+            //     const date = new Date(year, month - 1, day);
+
+            //     const isValidDate = date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+
+            //     if (!isValidDate) {
+            //         return false;
+            //     }
+            //     if (date > maxDate || date < minDate) {
+            //         return false;
+            //     }
+
+            //     if (month > 12) {
+            //         return false;
+            //     }
+
+            //     if ([4, 6, 9, 11].includes(month) && day > 30) {
+            //         return false;
+            //     }
+
+            //     if (month === 2) {
+            //         const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+            //         if (isLeapYear && day > 29) {
+            //             return false;
+            //         } else if (!isLeapYear && day > 28) {
+            //             return false;
+            //         }
+            //     }
+
+            //     return true;
+            // })   
             .required('Введите дату своего рождения'),
         gender_id: Yup.number()
             .required('Выберите Ваш пол'),
