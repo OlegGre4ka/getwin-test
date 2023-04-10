@@ -7,9 +7,10 @@ import ErrorGreenIcon from "./../../assets/ErrorGreenIcon.png";
 export interface IErrorProps {
     children: string | undefined;
     type?: string;
+    classes?: string;
 }
 
-export default function Error({ children, type }: IErrorProps) {
+export default function Error({ children, type, classes }: IErrorProps) {
     console.log(type, "type")
     return (
         <div className="errorBox">
@@ -21,7 +22,7 @@ export default function Error({ children, type }: IErrorProps) {
                 :
                 <>
                     <img src={ErrorCloseIcon} alt="ErrorCloseIcon" />
-                    <span className="error">{children}</span>
+                    <span className={classes ? classes : "error"}>{children}</span>
                 </>}
         </div>
     );

@@ -6,21 +6,20 @@
     padding-left: 24px;
     max-width: 100%;
     padding-left: 24px;
-    overflow-y: auto;
-    // overflow: -moz-scrollbars-none;
-    // -ms-overflow-style: none;
 
-    // &::-webkit-scrollbar {
-    //     width: 0;
-    // }
-    &::-webkit-scrollbar{
-        -webkit-appearance: none;
-        width: 6px;
-    }
+    @media (min-width:480px) {
+        overflow-y: auto;
 
-    &::-webkit-scrollbar-thumb{
-        background-color: #4e5af2;
-        border-radius: 2px;
+        &::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #4e5af2;
+            border-radius: 2px;
+        }
+
     }
 
     @media screen and (min-width: 481px) and (max-width: 1289px) {

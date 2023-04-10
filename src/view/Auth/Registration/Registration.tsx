@@ -1,3 +1,4 @@
+import {useState} from "react";
 import "./Registration.less";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,8 +12,8 @@ import Google from "./../../../assets/Google.png";
 import Facebook from "./../../../assets/Facebook.png";
 import Linkedin from "./../../../assets/Linkedin.png";
 
-import { useAppSelector, useAppDispatch } from "./../../../hooks/reduxHooks";
-import { setEmailAction } from "./../../../redux/actions/emailAction";
+import { useAppDispatch } from "./../../../hooks/reduxHooks";
+import { setEmailAction } from "../../../redux/actions/profileActions";
 
 type FormValues = {
     email: string;
@@ -26,8 +27,7 @@ interface IRegistration {
 
 const Registration = ({ openModal }: IRegistration) => {
     const dispatch = useAppDispatch();
-    // const email = useAppSelector(state => state.email.email);
-    // console.log(email, "email")
+    const [serverErrors, setServerErrors] = useState("");
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .email('Некоректный емейл')
@@ -51,20 +51,22 @@ const Registration = ({ openModal }: IRegistration) => {
     });
 
     const registerFormSubmit: SubmitHandler<FormValues> = async (data) => {
-        // dispatch({type:"SET_EMAIL",payload: data.email})
         delete data.confirmPassword;
         let Data = { ...data, ref: "http://example.com" };
         // const response = await API.postRegister(Data);
         dispatch(setEmailAction(data.email))
-        // localStorage.setItem("user_token","'678e812f99f9422489b45187bfb781e7'");
-        // localStorage.setItem("user_token",response?.data?.user_data?.token);
-        console.log(Data, "data-submit");
-        openModal();
-        // response.data.status === "success" && openModal();
+        // localStorage.setItem("user_token", response?.data?.user_data?.token);
+        // console.log(Data, response?.data?.user_data?.token, response, "data-submit");
+        // response.data.status === "success" ? openModal() : setServerErrors(response.data.msg);
+        openModal()
+        // console.log(response.data.msg, "errror-msg");
     };
 
     return (
         <>
+           {serverErrors && <Error classes="serverErrors">{serverErrors}</Error>}
+            {/* <Error classes="serverErrors">такой пользователь уже существует</Error> */}
+
             <form onSubmit={handleSubmit(registerFormSubmit)}>
                 <div className="inputEmail">
                     <Controller

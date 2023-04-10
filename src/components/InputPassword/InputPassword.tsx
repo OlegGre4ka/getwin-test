@@ -9,7 +9,6 @@ import Key from "./../../assets/Key.png";
 import KeyActive from "./../../assets/KeyActive.png";
 import Copy from "./../../assets/Copy.png";
 import ReGenerate from "./../../assets/ReGenerate.png";
-
 import { generatePassword } from "./../../helpers/generatePassword";
 
 interface InputPasswordProps {
@@ -43,14 +42,13 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
     useEffect(
         () => {
             setGeneratedPass(generatePassword());
-        }, [isKey]
+        }, []
     )
 
     const copyTextToClipboard = (text: string) => {
         navigator.clipboard.writeText(text).then(() => {
             console.log('Text copied to clipboard');
             setIsCopied(true);
-            // setIsGeneratePass(false);
         }, (err) => {
             console.error('Could not copy text: ', err);
         });
@@ -68,15 +66,14 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
         borderRadius: "4px",
         position: "relative"
     };
-    console.log(generatedPass, error,"generatedPass-value");
- 
+    // console.log(generatedPass, error, "generatedPass-value");
+
     return (
         <div className="inputPassWrapper">
             <label>{label}</label>
             <Input.Password
                 ref={passwordInputRef}
                 style={isFocused ? inputFocused : inputStyles}
-                // onBlur={onBlur}
                 onChange={onChange}
                 value={value}
                 placeholder={placeholder}
@@ -96,7 +93,6 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
                     {isGeneratePass ?
                         <div className="imgBox" onClick={() => {
                             setIsGeneratePass(!isGeneratePass);
-                            // passwordInputRef && passwordInputRef.current.focus();
                         }}><img className="imgActiveKey" src={KeyActive} alt="KeyActive" /></div>
                         : <div className="imgBox" onClick={() => {
                             setIsGeneratePass(!isGeneratePass);

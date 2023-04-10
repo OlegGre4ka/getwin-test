@@ -2,23 +2,24 @@ import { useState, forwardRef } from 'react';
 import "./Input.less";
 import { Input as InputAntd } from "antd";
 import InputMask from 'react-input-mask';
-
 import { Noop, RefCallBack } from "react-hook-form";
 import { Link } from "react-router-dom";
-import FlexBox from '../FlexBox/FlexBox';
+import { useAppSelector, useAppDispatch } from "./../../hooks/reduxHooks";
+import { setName, setSName, setLName, setBirthDate, setPhone } from "../../redux/actions/profileActions";
+import { phoneRegExp } from "./../../helpers/constants";
 
 interface InputProps {
     label: string;
     placeholder?: string;
     changeEmailHandler?: (e: React.FormEvent<HTMLInputElement>) => void;
     onBlur?: Noop;
-    onChange?: (...event: any[]) => void;
+    onChange?: any;
+    // onChange?: (...event: any[]) => void | undefined;
+    inputName?: string;
     value?: any;
-    // value?: string | undefined;
     ref?: RefCallBack;
     disabled?: boolean | undefined;
     styles?: string;
-    isConfirmPhone?: boolean | undefined;
     isLabelStar?: boolean | undefined;
     error?: any;
     isInputMask?: boolean;
@@ -26,17 +27,18 @@ interface InputProps {
 }
 
 interface InputStyles {
-    // padding: string;
     border: string;
     borderRadius: string;
 }
 
-const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disabled, styles, isConfirmPhone, isLabelStar, error,
+const Input = forwardRef(({ label, placeholder, onBlur, onChange, inputName, value, disabled, styles, isLabelStar, error,
     isInputMask, mask }: InputProps, ref) => {
     const [isFocused, setIsFocused] = useState(false);
+    const phone = useAppSelector(state => state.profile.phone);
+
+    const dispatch = useAppDispatch();
 
     const inputStyles: InputStyles = {
-        // padding: "6px 8px 6px 16px",
         border: error ? "2px solid #ff776f" : "2px solid #cbd5e2",
         borderRadius: "4px"
     }
@@ -44,7 +46,6 @@ const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disable
         border: "2px solid #3843ed",
         borderRadius: "4px"
     };
-    console.log(isFocused, "isFocused")
     const handleFocus = (e: any) => {
         setIsFocused(true);
         console.log(e, "onFocus-true")
@@ -55,20 +56,24 @@ const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disable
         setIsFocused(false);
         console.log(e, "blur")
     };
+
     return (
-        <FlexBox flexStyles="flexDirectionColumn">
+        <div className="flexDirectionColumn">
             <label className="labelInput">{label}{isLabelStar && <span className="labelStar">*</span>}</label>
             {isInputMask
                 ? <InputMask
                     mask={mask}
-                    onChange={onChange}
+                    onChange={(e) => {
+                        onChange(e);
+                        inputName === "phone" && dispatch(setPhone(e.target.value));
+                        inputName === "birth_date" && dispatch(setBirthDate(e.target.value));
+                    }}
                     value={value}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                 >
                     <InputAntd
                         style={isFocused ? inputFocused : inputStyles}
-                        onChange={onChange}
                         value={value}
                         className={styles}
                         placeholder={placeholder}
@@ -77,7 +82,12 @@ const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disable
                 </InputMask>
                 : <InputAntd
                     style={isFocused ? inputFocused : inputStyles}
-                    onChange={onChange}
+                    onChange={(e) => {
+                        onChange(e);
+                        inputName === "name" && dispatch(setName(e.target.value));
+                        inputName === "sname" && dispatch(setSName(e.target.value));
+                        inputName === "lname" && dispatch(setLName(e.target.value));
+                    }}
                     value={value}
                     className={styles}
                     placeholder={placeholder}
@@ -86,11 +96,11 @@ const Input = forwardRef(({ label, placeholder, onBlur, onChange, value, disable
                     onBlur={handleBlur}
                 />}
 
-            {isConfirmPhone &&
+            {phoneRegExp.test(phone) && inputName === "phone" &&
                 <div className="linkWrapper" >
                     <Link className="link" to="confirm-phone">Подтвердить телефон</Link>
                 </div>}
-        </FlexBox>
+        </div>
     );
 })
 export default Input

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
 import "./Profile.less";
 import BackIcon from "./../../assets/BackIcon.png";
@@ -14,7 +15,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from "./../../hooks/reduxHooks";
-import { setProfileAction } from "./../../redux/actions/emailAction";
+import { setProfileAction } from "../../redux/actions/profileActions";
 
 type FormValues = {
     name: string;
@@ -28,13 +29,12 @@ type FormValues = {
 
 
 const Profile = () => {
-    // let navigate = useNavigate();
-    const email = useAppSelector(state => state.profile.email);
+    const { name, sname, lname, birth_date, gender_id, phone, email } = useAppSelector(state => state.profile);
     const dispatch = useAppDispatch();
-
+    const [serverErrors, setServerErrors] = useState("");
+const [isContent, setIsContent] = useState(true);
     const [isModalOpen, openModal, closeModal]: any = useModal();
     const [isLogoutModalOpen, openLogoutModal, closeLogoutModal]: any = useModal();
-    const now = new Date();
 
 
     const validationSchema = Yup.object().shape({
@@ -43,7 +43,6 @@ const Profile = () => {
         sname: Yup.string()
             .required('Введите свою фамилию'),
         birth_date: Yup.string()
-            // .matches(/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, 'Некоректний формат дати')
             .matches(
                 /^(\d{2})\/(\d{2})\/(\d{4})$/,
                 'Неверный формат даты. Введите дату в формате dd/mm/yyyy'
@@ -61,7 +60,7 @@ const Profile = () => {
                 if ([4, 6, 9, 11].includes(month) && day > 30) {
                     return false;
                 }
-                if ([1,3,5,7,8,10,12].includes(month) && day > 31) {
+                if ([1, 3, 5, 7, 8, 10, 12].includes(month) && day > 31) {
                     return false;
                 }
                 if (month === 2) {
@@ -74,48 +73,6 @@ const Profile = () => {
                 }
                 return date.getFullYear() >= minYear && date.getFullYear() <= currentYear;
             })
-            // .test('valid-date', 'Введіть коректну дату', (value: any) => {
-            //     const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-            //     const now = new Date();
-            //     const maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            //     const minDate = new Date(now.getFullYear() - 100, now.getMonth(), now.getDate());
-
-            //     if (!regex.test(value)) {
-            //         return false;
-            //     }
-
-            //     const [day, month, year]: any = regex.exec(value);
-
-            //     const date = new Date(year, month - 1, day);
-
-            //     const isValidDate = date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-
-            //     if (!isValidDate) {
-            //         return false;
-            //     }
-            //     if (date > maxDate || date < minDate) {
-            //         return false;
-            //     }
-
-            //     if (month > 12) {
-            //         return false;
-            //     }
-
-            //     if ([4, 6, 9, 11].includes(month) && day > 30) {
-            //         return false;
-            //     }
-
-            //     if (month === 2) {
-            //         const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-            //         if (isLeapYear && day > 29) {
-            //             return false;
-            //         } else if (!isLeapYear && day > 28) {
-            //             return false;
-            //         }
-            //     }
-
-            //     return true;
-            // })   
             .required('Введите дату своего рождения'),
         gender_id: Yup.number()
             .required('Выберите Ваш пол'),
@@ -130,23 +87,23 @@ const Profile = () => {
     });
 
     const createProfileSubmit: SubmitHandler<FormValues> = async (data) => {
-        // let Data = { ...data, email };
         // const response = await API.postCreateProfile(data);
         dispatch(setProfileAction({ ...data, email }));
-        // localStorage.setItem("user_token", "8ceb71a87b37b5371d749bb9eae06644");
-        console.log({ ...data, email }, "data-submit");
-        // response.data.status === "success" && openModal();
+        // console.log({ ...data, email }, response,response.data.msg, "data-submit");
+        // response.data.status === "success" ? openModal() : setServerErrors(response.data.msg)
         openModal();
+        setIsContent(false);
     };
-
     return (
         <>
-            {!isLogoutModalOpen && <Layout isProfile={true}>
+            {isContent && <Layout isProfile={true}>
 
                 <form className="profileWrapper" onSubmit={handleSubmit(createProfileSubmit)}>
                     <div className="profileForm">
 
                         <h1 className="profileTitle">Профиль пользователя</h1>
+                        {serverErrors && <Error classes="serverErrors">{serverErrors}</Error>}
+
                         <div className="nameInputsBlock">
 
                             <div className="nameInput">
@@ -154,8 +111,9 @@ const Profile = () => {
                                     name="sname"
                                     control={control}
                                     rules={{ required: true }}
+                                    defaultValue={sname}
                                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                                        <Input label="Фамилия" placeholder="Михайлов" isLabelStar={true} error={errors.sname}
+                                        <Input label="Фамилия" inputName="sname" placeholder="Михайлов" isLabelStar={true} error={errors.sname}
                                             onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                                     )}
                                 />
@@ -168,8 +126,9 @@ const Profile = () => {
                                     name="name"
                                     control={control}
                                     rules={{ required: true }}
+                                    defaultValue={name}
                                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                                        <Input label="Имя" placeholder="Михаил" isLabelStar={true} error={errors.name}
+                                        <Input label="Имя" inputName="name" placeholder="Михаил" isLabelStar={true} error={errors.name}
                                             onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                                     )}
                                 />
@@ -182,8 +141,9 @@ const Profile = () => {
                                     name="lname"
                                     control={control}
                                     rules={{ required: true }}
+                                    defaultValue={lname}
                                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                                        <Input label="Отчество" placeholder="Михайлович" error={errors.lname}
+                                        <Input label="Отчество" inputName="lname" placeholder="Михайлович" error={errors.lname}
                                             onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                                     )}
                                 />
@@ -196,8 +156,9 @@ const Profile = () => {
                                 name="birth_date"
                                 control={control}
                                 rules={{ required: true }}
+                                defaultValue={birth_date}
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                                    <Input label="Дата рождения" placeholder="10/08/1983" isLabelStar={true}
+                                    <Input label="Дата рождения" inputName="birth_date" placeholder="10/08/1983" isLabelStar={true}
                                         mask="99/99/9999" isInputMask={true}
                                         error={errors.birth_date} onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                                 )}
@@ -210,8 +171,9 @@ const Profile = () => {
                                 name="gender_id"
                                 control={control}
                                 rules={{ required: true }}
+                                defaultValue={gender_id}
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                                    <Select label="Пол" placeholder="Выберите пол" isLabelStar={true} error={errors.gender_id}
+                                    <Select label="Пол" inputName="gender_id" placeholder="Выберите пол" isLabelStar={true} error={errors.gender_id}
                                         onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                                 )}
                             />
@@ -223,10 +185,11 @@ const Profile = () => {
                                 name="phone"
                                 control={control}
                                 rules={{ required: true }}
+                                defaultValue={phone}
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
                                     <Input label="Телефон" placeholder="+38 (050) 725 60 09"
                                         mask="+38 (999) 999 99 99" isInputMask={true}
-                                        isConfirmPhone={true} isLabelStar={true}
+                                        inputName="phone" isLabelStar={true}
                                         error={errors.phone} onBlur={onBlur} onChange={onChange} value={value} ref={ref} />
                                 )}
                             />
@@ -239,7 +202,10 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className="buttonBlock">
-                        <div className="exit" onClick={() => openLogoutModal()}>
+                        <div className="exit" onClick={() => {
+                            openLogoutModal();
+                            setIsContent(false);
+                        }}>
                             <img className="backIcon" src={BackIcon} alt="BackIcon" />
                             <span className="exitText">Выход</span>
                         </div>
@@ -251,10 +217,16 @@ const Profile = () => {
             </Layout>}
             {isModalOpen && <Modal
                 text1="Новый пользователь успешно создан и добавлен в базу данных"
-                onHide={closeModal} />}
+                onHide={()=>{
+                    closeModal();
+                    setIsContent(true);
+                }} />}
 
             {isLogoutModalOpen && <LogoutModal
-                onHide={closeLogoutModal} />}
+                onHide={()=>{
+                    closeLogoutModal();
+                    setIsContent(true);
+                }} />}
         </>
     )
 }
