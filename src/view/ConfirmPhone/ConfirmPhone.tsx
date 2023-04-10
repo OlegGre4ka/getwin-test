@@ -29,7 +29,6 @@ const ConfirmTelephone = () => {
                 <div className="confirmButtonBlock" onClick={() => navigate("/profile")}>
                     <img className="backIcon" src={ArrowLeft} alt="BackIcon" />
                     <span className="exitText">Назад</span>
-                    {/* </div> */}
                 </div>
 
             </div>

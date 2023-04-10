@@ -48,13 +48,11 @@ const Input = forwardRef(({ label, placeholder, onBlur, onChange, inputName, val
     };
     const handleFocus = (e: any) => {
         setIsFocused(true);
-        console.log(e, "onFocus-true")
     };
 
     const handleBlur = (e: any) => {
         onBlur && onBlur();
         setIsFocused(false);
-        console.log(e, "blur")
     };
 
     return (

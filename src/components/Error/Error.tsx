@@ -11,7 +11,6 @@ export interface IErrorProps {
 }
 
 export default function Error({ children, type, classes }: IErrorProps) {
-    console.log(type, "type")
     return (
         <div className="errorBox">
             {type === "matches" ?

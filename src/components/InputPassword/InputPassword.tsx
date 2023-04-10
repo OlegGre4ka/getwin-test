@@ -1,7 +1,6 @@
 import { useEffect, useState, memo, forwardRef, useRef } from 'react';
 import "./InputPassword.less";
 import { Tooltip } from "antd";
-// import {InputPassword as InputPasswordAntd} from 'antd/lib/input/Password';
 // import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Input } from 'antd';
 import { Noop, RefCallBack } from "react-hook-form";
@@ -79,12 +78,10 @@ const InputPassword = memo(forwardRef(({ placeholder, label, isKey, setGenerateP
                 placeholder={placeholder}
                 onFocus={() => {
                     setIsFocused(true);
-                    console.log("onFocus-true")
                 }}
                 onBlur={() => {
                     onBlur && onBlur()
                     setIsFocused(false);
-                    console.log("onFocus-false")
                 }}
             // iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined 
             />

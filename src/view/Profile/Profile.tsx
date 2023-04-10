@@ -2,7 +2,6 @@ import { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
 import "./Profile.less";
 import BackIcon from "./../../assets/BackIcon.png";
-// import { useNavigate } from "react-router-dom";
 import Button from "./../../components/Button/Button";
 import Input from "./../../components/Input/Input";
 import Select from "./../../components/Select/Select";
@@ -16,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from "./../../hooks/reduxHooks";
 import { setProfileAction } from "../../redux/actions/profileActions";
+import {phoneRegExp} from "./../../helpers/constants";
 
 type FormValues = {
     name: string;
@@ -77,7 +77,7 @@ const [isContent, setIsContent] = useState(true);
         gender_id: Yup.number()
             .required('Выберите Ваш пол'),
         phone: Yup.string()
-            .matches(/^\+38\s\(\d{3}\)\s\d{3}\s\d{2}\s\d{2}$/, "Введите правильний номер телефона")
+            .matches(phoneRegExp, "Введите правильний номер телефона")
             .required("Введите номер телефона"),
 
     });
@@ -87,9 +87,9 @@ const [isContent, setIsContent] = useState(true);
     });
 
     const createProfileSubmit: SubmitHandler<FormValues> = async (data) => {
-        // const response = await API.postCreateProfile(data);
+        const response = await API.postCreateProfile(data);
         dispatch(setProfileAction({ ...data, email }));
-        // console.log({ ...data, email }, response,response.data.msg, "data-submit");
+        console.log({ ...data, email }, response,response.data.msg, "data-submit");
         // response.data.status === "success" ? openModal() : setServerErrors(response.data.msg)
         openModal();
         setIsContent(false);
@@ -226,6 +226,15 @@ const [isContent, setIsContent] = useState(true);
                 onHide={()=>{
                     closeLogoutModal();
                     setIsContent(true);
+                    dispatch(setProfileAction({
+                        sname: "",
+                        name: "",
+                        lname: "",
+                        birth_date: "",
+                        gender_id: null,
+                        phone: "",
+                        email: ""
+                    }))
                 }} />}
         </>
     )

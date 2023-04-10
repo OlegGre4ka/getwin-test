@@ -5,7 +5,7 @@ const defaultState = {
     name: "",
     lname: "",
     birth_date: "",
-    gender_id: null,
+    gender_id: undefined,
     phone: "",
     email: ""
 }

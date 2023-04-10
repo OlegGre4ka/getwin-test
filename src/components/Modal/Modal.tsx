@@ -9,14 +9,14 @@ interface IModal {
 }
 
 const Modal = ({ onHide, text1, text2 }: IModal) => {
-let navigate = useNavigate();
+    let navigate = useNavigate();
 
     return (
-        <div className="modal">
-            <div className="closeButton" onClick={() => {
-                onHide();
-                navigate('/profile');
-            }}>
+        <div className="modal" onClick={() => {
+            onHide();
+            navigate('/profile');
+        }}>
+            <div className="closeButton" >
                 <img src={Close} alt="CloseButton" />
             </div>
             <div className="checkCyrcle">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import "./Layout.less";
 import { useLocation } from "react-router-dom";
 import Stroke3 from "./../../assets/Stroke3.png";
@@ -9,17 +9,17 @@ interface ILayout {
     children: any;
 }
 const Layout = ({ isProfile, children }: ILayout) => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     let { pathname } = useLocation();
     
-    useEffect(() => {
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-        }
+    // useEffect(() => {
+    //     function handleResize() {
+    //         setWindowWidth(window.innerWidth);
+    //     }
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    //     window.addEventListener("resize", handleResize);
+    //     return () => window.removeEventListener("resize", handleResize);
+    // }, []);
     
     const list = ["Автоматизация HR", "Интеграция с job-порталами", "Оценка персонала", "Синхронизация с Outlook",
         "Безопасность данных", "Парсинг резюме", "Мультиязычность", "Конструктор отчетности"];
@@ -42,7 +42,6 @@ const Layout = ({ isProfile, children }: ILayout) => {
                         <p className="descProfile">Заполните информацию о себе, чтобы начать использовать все преимущества платформы</p>
                     </>)}
                 </div>
-                {/* {(windowWidth > 1290 || windowWidth < 480 || pathname === "/profile" ) && <img src={Group} className="group" alt="Group" />} */}
                 <img src={Group} className="group" alt="Group" />
 
             </div>

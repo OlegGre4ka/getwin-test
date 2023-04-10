@@ -17,7 +17,6 @@ const LogoutModal = ({ onHide }: ILogoutModal) => {
             <div className="content">
                 <div className="closeButton" onClick={() => {
                     onHide();
-                    // navigate('/profile');
                 }}>
                     <img src={CloseLogoutIcon} alt="CloseButton" />
                 </div>
