@@ -53,6 +53,12 @@ const Profile = () => {
                 const [day, month, year] = value.split('/').map((num: any) => parseInt(num));
                 const date = new Date(year, month - 1, day);
 
+                if(!/^(0?[1-9]|[1-2]\d|3[0-1])\/(0?[1-9]|1[0-2])\/([1-9]\d{3}|[1-9]\d{1})$/.test(value)){
+                    return false;
+                }
+                if(day === 0 && month === 0 && year === 0){
+                    return false;
+                }
                 if (month > 12) {
                     return false;
                 }
