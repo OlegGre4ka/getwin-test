@@ -53,12 +53,12 @@ const Registration = ({ openModal }: IRegistration) => {
     const registerFormSubmit: SubmitHandler<FormValues> = async (data) => {
         delete data.confirmPassword;
         let Data = { ...data, ref: "http://example.com" };
-        // const response = await API.postRegister(Data);
+        const response = await API.postRegister(Data);
         dispatch(setEmailAction(data.email))
-        // localStorage.setItem("user_token", response?.data?.user_data?.token);
+        localStorage.setItem("user_token", response?.data?.user_data?.token);
         // console.log(Data, response?.data?.user_data?.token, response, "data-submit");
-        // response.data.status === "success" ? openModal() : setServerErrors(response.data.msg);
-        openModal();
+        response.data.status === "success" ? openModal() : setServerErrors(response.data.msg);
+        // openModal();
     };
 
     return (
