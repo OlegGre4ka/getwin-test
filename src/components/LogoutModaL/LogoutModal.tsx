@@ -6,9 +6,10 @@ import Button from "./../Button/Button";
 
 interface ILogoutModal {
     onHide: any;
+    onReset: ()=>void;
 }
 
-const LogoutModal = ({ onHide }: ILogoutModal) => {
+const LogoutModal = ({ onHide, onReset }: ILogoutModal) => {
     let navigate = useNavigate();
 
     return (
@@ -28,6 +29,7 @@ const LogoutModal = ({ onHide }: ILogoutModal) => {
                 </div>
                 <Button btnStyle="white-216" clickHandler={() => {
                     onHide();
+                    onReset();
                     navigate('/',  { state: { keyTab:"1" }});
                 }}>Выйти</Button>
             </div>

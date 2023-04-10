@@ -15,7 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from "./../../hooks/reduxHooks";
 import { setProfileAction } from "../../redux/actions/profileActions";
-import {phoneRegExp} from "./../../helpers/constants";
+import { phoneRegExp } from "./../../helpers/constants";
 
 type FormValues = {
     name: string;
@@ -32,7 +32,7 @@ const Profile = () => {
     const { name, sname, lname, birth_date, gender_id, phone, email } = useAppSelector(state => state.profile);
     const dispatch = useAppDispatch();
     const [serverErrors, setServerErrors] = useState("");
-const [isContent, setIsContent] = useState(true);
+    const [isContent, setIsContent] = useState(true);
     const [isModalOpen, openModal, closeModal]: any = useModal();
     const [isLogoutModalOpen, openLogoutModal, closeLogoutModal]: any = useModal();
 
@@ -89,7 +89,7 @@ const [isContent, setIsContent] = useState(true);
     const createProfileSubmit: SubmitHandler<FormValues> = async (data) => {
         const response = await API.postCreateProfile(data);
         dispatch(setProfileAction({ ...data, email }));
-        console.log({ ...data, email }, response,response.data.msg, "data-submit");
+        console.log({ ...data, email }, response, response.data.msg, "data-submit");
         // response.data.status === "success" ? openModal() : setServerErrors(response.data.msg)
         openModal();
         setIsContent(false);
@@ -198,7 +198,9 @@ const [isContent, setIsContent] = useState(true);
                         </div>
 
                         <div className="inputProfile">
-                            <Input label="E-mail" value={email} disabled={true} />
+                            <Input label="E-mail" value={email}
+                                // defaultValue={email}
+                                disabled={true} />
                         </div>
                     </div>
                     <div className="buttonBlock">
@@ -217,25 +219,25 @@ const [isContent, setIsContent] = useState(true);
             </Layout>}
             {isModalOpen && <Modal
                 text1="Новый пользователь успешно создан и добавлен в базу данных"
-                onHide={()=>{
+                onHide={() => {
                     closeModal();
                     setIsContent(true);
                 }} />}
 
             {isLogoutModalOpen && <LogoutModal
-                onHide={()=>{
+                onHide={() => {
                     closeLogoutModal();
                     setIsContent(true);
-                    dispatch(setProfileAction({
-                        sname: "",
-                        name: "",
-                        lname: "",
-                        birth_date: "",
-                        gender_id: null,
-                        phone: "",
-                        email: ""
-                    }))
-                }} />}
+                }}
+                onReset={() => dispatch(setProfileAction({
+                    sname: "",
+                    name: "",
+                    lname: "",
+                    birth_date: "",
+                    gender_id: null,
+                    phone: "",
+                    email: ""
+                }))} />}
         </>
     )
 }
